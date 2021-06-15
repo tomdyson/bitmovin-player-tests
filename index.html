@@ -4,18 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script type="text/javascript" src="//cdn.bitmovin.com/player/web/8/bitmovinplayer.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/tachyons/css/tachyons.min.css">
-    <style>
-        .bmpui-ui-uicontainer {
-            font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, sans-serif;
-            font-size: 10pt;
-        }
-
-        .bmpui-ui-watermark {
-            visibility: hidden;
-        }
-    </style>
 </head>
 
 <body class="w-80 sans-serif bg-white">
@@ -28,37 +17,5 @@
 
     </article>
 </body>
-<script>
-    const container = document.getElementById('my-player');
-    const playerConfig = {
-        key: "dfede43d-5048-4a94-aa19-7838b142f501",
-        remotecontrol: {
-            type: 'googlecast',
-        },
-    };
-
-    const source = {
-        // title: "Sidelined subtitles test",
-        dash: 'https://s3.eu-west-2.amazonaws.com/tom.roh.video.output/10655/manifest.mpd',
-        // hls: 'https://s3.eu-west-2.amazonaws.com/tom.roh.video.output/10655/manifest.m3u8',
-    };
-
-    const player = new bitmovin.player.Player(container, playerConfig);
-    player.load(source).then(function (playerInstance) {
-        var enSubtitle = {
-            id: "sub1",
-            lang: "en",
-            label: "English",
-            url: "https://tom.s3.amazonaws.com/share/waste-land.vtt",
-            kind: "subtitle",
-            enabled: "true"
-        };
-        player.subtitles.add(enSubtitle);
-    }, function (reason) {
-        console.log("Error while creating bitmovin player instance", reason);
-    });
-
-
-</script>
 
 </html>
