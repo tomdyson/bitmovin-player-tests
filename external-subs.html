@@ -31,7 +31,7 @@
 <script>
     const container = document.getElementById('my-player');
     const playerConfig = {
-        key: "90760f76-79b6-4b68-9871-6ba8a3f4d5b9",
+        key: "e27040ef-73f0-4b61-97c0-79c30e6f4f6a",
         remotecontrol: {
             type: 'googlecast',
         },
@@ -39,8 +39,8 @@
 
     const source = {
         // title: "Sidelined subtitles test",
-        // dash: 'https://s3.eu-west-2.amazonaws.com/tom.roh.video.output/10655/manifest.mpd',
-        hls: 'https://video-ingestor-output-bucket.s3-eu-west-1.amazonaws.com/manifest.m3u8',
+        dash: 'https://s3.eu-west-2.amazonaws.com/tom.roh.video.output/10655/manifest.mpd',
+        // hls: 'https://video-ingestor-output-bucket.s3-eu-west-1.amazonaws.com/manifest.m3u8',
     };
 
     const player = new bitmovin.player.Player(container, playerConfig);
