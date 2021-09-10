@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="//cdn.bitmovin.com/player/web/8/bitmovinplayer.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/tachyons/css/tachyons.min.css">
+    <style>
+        .bmpui-ui-uicontainer {
+            font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, sans-serif;
+            font-size: 10pt;
+        }
+
+        .bmpui-ui-watermark {
+            visibility: hidden;
+        }
+
+        .bmpui-ui-subtitle-label {
+            font-size: 24pt;
+            font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, sans-serif;
+        }
+    </style>
+    <title>Bitmovin player tests: pre-roll</title>
+</head>
+
+<body class="w-80 sans-serif bg-white">
+    <article class="pa3 pa5">
+        <p class="measure lh-copy mt0 mb1">
+            <a href="/" class="dark-green no-underline underline-hover">All tests</a>
+        </p>
+        <h1 class="f4 f1-m f1-l mt0 mb0">3. Pre-roll in player</h1>
+        <p class="measure lh-copy mt2 mb3">
+            Prepend a short HLS source before the main video. Hide controls for the pre-roll.
+        </p>
+
+        <div id="my-player" width="600"></div>
+    </article>
+</body>
+<script>
+    const container = document.getElementById('my-player');
+    const playerConfig = {
+        key: "e27040ef-73f0-4b61-97c0-79c30e6f4f6a",
+        remotecontrol: {
+            type: 'googlecast',
+        },
+    };
+
+    const preroll = {
+        hls: 'https://stream.mux.com/SkRd4AvtEYtsl01VVXv01kbBkO1oWAVhL7700GPv57i02JE.m3u8',
+    }
+    const source = {
+        hls: 'https://stream.mux.com/yAYFdElDFA2D00kpok01JleZRgBZ9dNsMQ2n38RvGvk7c.m3u8',
+    };
+
+    const player = new bitmovin.player.Player(container, playerConfig);
+    player.load(preroll).then(function (playerInstance) {
+        document.getElementsByClassName('bmpui-ui-container bmpui-controlbar-top')[0].style.display = 'none';
+        player.on(bitmovin.player.PlayerEvent.PlaybackFinished, function () {
+            player.load(source).then(function (playerInstance) {
+                document.getElementsByClassName('bmpui-ui-container bmpui-controlbar-top')[0].style.display = 'block';
+                player.play();
+             });
+        });
+    }, function (reason) {
+        console.log("Error while creating bitmovin player instance", reason);
+    });
+
+
+</script>
+
+</html>
