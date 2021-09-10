@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script type="text/javascript" src="//cdn.bitmovin.com/player/web/8/bitmovinplayer.js"></script>
+    <script type="text/javascript" src="//cdn.bitmovin.com/analytics/web/2/bitmovinanalytics.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/tachyons/css/tachyons.min.css">
     <style>
         .bmpui-ui-uicontainer {
@@ -44,13 +45,24 @@
         remotecontrol: {
             type: 'googlecast',
         },
+        analytics: {
+            key: "17f6fe44-67f3-416d-a7cb-ee0d2c8fbd85"
+        }
     };
 
     const preroll = {
         hls: 'https://stream.mux.com/SkRd4AvtEYtsl01VVXv01kbBkO1oWAVhL7700GPv57i02JE.m3u8',
-    }
+        analytics: {
+            videoId: 'performance-id-1',
+            title: 'preroll'
+        }
+    };
     const source = {
         hls: 'https://stream.mux.com/yAYFdElDFA2D00kpok01JleZRgBZ9dNsMQ2n38RvGvk7c.m3u8',
+        analytics: {
+            videoId: 'performance-id-2',
+            title: 'At The Still Point'
+        }
     };
 
     const player = new bitmovin.player.Player(container, playerConfig);
