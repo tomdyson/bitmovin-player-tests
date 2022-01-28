@@ -64,7 +64,7 @@
     };
 
     preroll_player.load(preroll_source).then(function (playerInstance) {
-        document.getElementsByClassName('bmpui-ui-container bmpui-controlbar-top')[0].style.display = 'none';
+        // document.getElementsByClassName('bmpui-ui-container bmpui-controlbar-top')[0].style.display = 'none';
         performance_player.load(performance_source).then(function (playerInstance) {
         }, function (reason) {
             console.log("Error while creating performance player instance", reason);
