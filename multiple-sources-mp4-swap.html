@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="//cdn.bitmovin.com/player/web/8/bitmovinplayer.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/tachyons/css/tachyons.min.css">
+    <style>
+        .bmpui-ui-uicontainer {
+            font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, sans-serif;
+            font-size: 10pt;
+        }
+
+        .bmpui-ui-watermark {
+            visibility: hidden;
+        }
+
+        .bmpui-ui-subtitle-label {
+            font-size: 24pt;
+            font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, sans-serif;
+        }
+    </style>
+    <title>Bitmovin player tests: pre-roll</title>
+</head>
+
+<body class="w-80 sans-serif bg-white">
+    <article class="pa3 pa5">
+        <p class="measure lh-copy mt0 mb1">
+            <a href="/" class="dark-green no-underline underline-hover">All tests</a>
+        </p>
+        <h1 class="f4 f1-m f1-l mt0 mb0">5. Swap players</h1>
+        <p class="measure lh-copy mt2 mb3">
+            Load two players at the same time, hiding the second player (HLS), but preloading its content. 
+            When the first player (MP4) is finished, swap the two players.
+        </p>
+
+        <div id="preroll-player" width="600"></div>
+        <div id="performance-player" width="600" style="display:none"></div>
+    </article>
+</body>
+<script>
+    const preroll_container = document.getElementById('preroll-player');
+    const performance_container = document.getElementById('performance-player');
+
+    const playerConfig = {
+        key: "1cb2ef33-6d56-4632-8d8b-1fdbf64b3511",
+    };
+
+    const preroll_player = new bitmovin.player.Player(preroll_container, playerConfig);
+    const performance_player = new bitmovin.player.Player(performance_container, playerConfig);
+
+    const preroll_source = {
+        progressive: 'https://tom.s3.amazonaws.com/share/muted-d-minor-trim.mp4',
+    };
+    const performance_source = {
+        hls: 'https://stream.mux.com/yAYFdElDFA2D00kpok01JleZRgBZ9dNsMQ2n38RvGvk7c.m3u8',
+    };
+
+    preroll_player.load(preroll_source).then(function (playerInstance) {
+        performance_player.load(performance_source).then(function (playerInstance) {
+        }, function (reason) {
+            console.log("Error while creating performance player instance", reason);
+        });
+        preroll_player.on(bitmovin.player.PlayerEvent.PlaybackFinished, function () {
+            preroll_container.style.display = 'none';
+            performance_container.style.display = 'block';
+            performance_player.play();
+        });
+    }, function (reason) {
+        console.log("Error while creating bitmovin player instance", reason);
+    });
+
+    
+
+
+</script>
+
+</html>
