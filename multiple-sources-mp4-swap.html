@@ -45,6 +45,12 @@
 
     const playerConfig = {
         key: "1cb2ef33-6d56-4632-8d8b-1fdbf64b3511",
+        ui: {
+            playbackSpeedSelectionEnabled: false
+          },
+        remotecontrol: {
+            type: 'googlecast',
+        },
     };
 
     const preroll_player = new bitmovin.player.Player(preroll_container, playerConfig);
@@ -58,6 +64,7 @@
     };
 
     preroll_player.load(preroll_source).then(function (playerInstance) {
+        document.getElementsByClassName('bmpui-ui-container bmpui-controlbar-top')[0].style.display = 'none';
         performance_player.load(performance_source).then(function (playerInstance) {
         }, function (reason) {
             console.log("Error while creating performance player instance", reason);
@@ -65,6 +72,7 @@
         preroll_player.on(bitmovin.player.PlayerEvent.PlaybackFinished, function () {
             preroll_container.style.display = 'none';
             performance_container.style.display = 'block';
+            document.getElementsByClassName('bmpui-ui-container bmpui-controlbar-top')[0].style.display = 'block';
             performance_player.play();
         });
     }, function (reason) {
